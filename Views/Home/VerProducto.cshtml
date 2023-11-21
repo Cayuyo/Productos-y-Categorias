@@ -1,0 +1,40 @@
+@model Asociacion
+<div class="head">
+    <h4><a href="/" style="margin-right: 10px;">Productos </a>
+        <p> | </p>
+        <a href="/categorias" style="margin-left: 10px;">Categorias</a>
+    </h4>
+</div>
+    <h2>@ViewBag.ThisProducto.Nombre</h2>
+<div class='flexi'>
+    <div class="left">
+        <h3>Categorias:</h3>
+        <ul>
+            @if (ViewBag.ProductWithCategories != null)
+            {
+                @foreach (var c in ViewBag.ProductWithCategories.AssocCategoria)
+                {
+                    <li>@c.Categoria.Nombre</li>
+                }
+            }
+        </ul>
+    </div>
+    <form class="right" asp-action="AddCatToProd" asp-controller="Home" method="post">
+        <h3>Agregar Categoria:</h3>
+        <div class="row">
+            <input type="hidden" asp-for="ProductoId" value="@ViewBag.ThisProducto.ProductoId">
+            <select asp-for="CategoriaId">
+                @if (ViewBag.NotYetAssoc != null)
+                {
+                    @foreach (var c in ViewBag.NotYetAssoc)
+                    {
+                        <option value="@c.CategoriaId">@c.Nombre</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="row">
+            <input class="btn btn-primary" value="Agregar Categoria" type="submit">
+        </div>
+    </form>
+</div>

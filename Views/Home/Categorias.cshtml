@@ -1,0 +1,55 @@
+@model Categoria
+
+@{
+    var existeUsuarioError = ViewData.ModelState["Correo"]?.Errors.FirstOrDefault()?.ErrorMessage;
+}
+
+@if (!string.IsNullOrEmpty(existeUsuarioError))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @existeUsuarioError
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="head">
+    <h4><a href="/" style="margin-right: 10px;">Productos </a>
+        <p> | </p>
+        <p style="margin-left: 10px;">Categorias</p>
+    </h4>
+</div>
+
+<div class="center-content">
+    <h2 style="margin-top: 20px;">Tarea Mucho-a-Muchos</h2>
+    <div class='content'>
+        <div class='CrearProducto'>
+            <form asp-action="CrearCategoria" method="post">
+                <h3>Nueva Categoria ⏬</h3><br />
+                <div class="form-group">
+                    <label asp-for="Nombre">Nombre: </label>
+                    <input asp-for="Nombre" class="form-control" required />
+                    <span asp-validation-for="Nombre" class="text-danger"></span></br>
+                </div>
+
+                <button type="submit" class="btn2 btn btn-primary">Crear Categoria</button>
+            </form>
+        </div>
+        <div class='linea'>
+
+        </div>
+        <div class='listaproductos'>
+            <h4>Todas las Categorias</h4><br />
+            <ul>
+                @if (ViewBag.AllCategorias != null)
+                {
+                    @foreach (var p in ViewBag.AllCategorias)
+                    {
+                        <li><a href="/categorias/@p.CategoriaId">@p.Nombre</a></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
